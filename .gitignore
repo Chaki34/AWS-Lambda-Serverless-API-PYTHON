@@ -1,0 +1,20 @@
+.env
+.env.*
+*.pem
+*.key
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+.idea/
+.vscode/
+
+# Allow example environment templates
+!.env.example
+
+# Testing and build artifacts
+.pytest_cache/
+.coverage
+dist/
+build/

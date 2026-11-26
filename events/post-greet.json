@@ -1,0 +1,14 @@
+{
+  "version": "2.0",
+  "rawPath": "/greet",
+  "requestContext": {
+    "http": {
+      "method": "POST"
+    }
+  },
+  "headers": {
+    "content-type": "application/json"
+  },
+  "body": "{\"name\": \"Debmalya\"}",
+  "isBase64Encoded": false
+}

@@ -1,0 +1,40 @@
+name: CloudAPI - AWS Lambda CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "lambda/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy CloudAPI to AWS Lambda
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Package Lambda Function
+        run: |
+          cd lambda
+          zip -j ../lambda-deployment.zip lambda_function.py
+
+      - name: Configure AWS Credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::037005020187:role/CloudAPI-GitHubActions-Deploy-Role
+          aws-region: eu-north-1
+
+      - name: Deploy Lambda Function
+        run: |
+          aws lambda update-function-code \
+            --function-name cloudapi-serverless-function \
+            --zip-file fileb://lambda-deployment.zip
